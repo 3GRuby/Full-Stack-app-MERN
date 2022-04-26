@@ -1,9 +1,13 @@
 import { Box, Container } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import products from '../products'
+import axios from 'axios'
+import CardMedia from '@mui/material/CardMedia'
+import Card from '@mui/material/Card'
+import { useParams } from 'react-router-dom'
+import Typography from '@mui/material/Typography'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -14,6 +18,20 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const ProductScreen = () => {
+    const [product, setProduct] = useState({})
+
+    const params = useParams()
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const { data } = await axios.get(`/api/products/${params.id}`)
+
+            setProduct(data)
+        }
+
+        getProducts()
+    })
+
     return (
         <>
             <Container
@@ -25,8 +43,19 @@ const ProductScreen = () => {
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                     <Grid item xs={3} sx={{ height: '50%' }}>
-                        <Item>1</Item>
+                        <Card sx={{ maxWidth: 345 }}>
+                            <CardMedia
+                                component="img"
+                                alt="green iguana"
+                                height="140"
+                                image={product.image}
+                            />
+                        </Card>
+                        <Typography variant="h5" gutterBottom component="div">
+                            {product.name}
+                        </Typography>
                     </Grid>
+
                     <Grid item xs={3}>
                         <Item>2</Item>
                     </Grid>

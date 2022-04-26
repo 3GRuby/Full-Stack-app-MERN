@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { Container } from '@mui/material'
-import products from '../products'
 import { Product } from '../components/Product'
+import axios from 'axios'
 
 /* const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -12,6 +12,18 @@ import { Product } from '../components/Product'
 })) */
 
 const HomeScreen = () => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const { data } = await axios.get('/api/products')
+
+            setProducts(data)
+        }
+
+        getProducts()
+    }, [])
+
     return (
         <>
             <Container sx={{ bgcolor: '', height: '100vh', my: 1, py: 1 }}>

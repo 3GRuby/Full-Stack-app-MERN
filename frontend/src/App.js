@@ -1,5 +1,12 @@
 import './App.css'
-import { Routes, Route, BrowserRouter, Link, Router } from 'react-router-dom'
+import {
+    Routes,
+    Route,
+    BrowserRouter,
+    Link,
+    Router,
+    useParams,
+} from 'react-router-dom'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
